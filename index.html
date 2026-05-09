@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MY FIT — 私のサイズノート</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --border-light: #333;
+    --accent: #c8a96e;
+    --accent-dim: #7a6340;
+    --text: #e8e6e0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --red: #c0392b;
+    --green: #2ecc71;
+    --yellow: #f39c12;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 300;
+min-height: 100vh;
+font-size: 14px;
+-webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+header {
+border-bottom: 1px solid var(–border);
+padding: 20px 20px 16px;
+position: sticky;
+top: 0;
+background: var(–bg);
+z-index: 100;
+}
+.header-inner {
+max-width: 480px;
+margin: 0 auto;
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+}
+.logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+letter-spacing: 4px;
+color: var(–text);
+line-height: 1;
+}
+.logo span {
+color: var(–accent);
+}
+.subtitle {
+font-size: 9px;
+letter-spacing: 2px;
+color: var(–text-muted);
+text-transform: uppercase;
+margin-top: 3px;
+}
+.header-right {
+display: flex;
+gap: 10px;
+}
+.icon-btn {
+background: none;
+border: 1px solid var(–border);
+color: var(–text-dim);
+padding: 6px 10px;
+font-size: 11px;
+letter-spacing: 1px;
+cursor: pointer;
+font-family: ‘DM Mono’, monospace;
+transition: all 0.2s;
+}
+.icon-btn:hover {
+border-color: var(–accent);
+color: var(–accent);
+}
+
+/* NAV TABS */
+nav {
+border-bottom: 1px solid var(–border);
+background: var(–bg);
+position: sticky;
+top: 73px;
+z-index: 99;
+}
+.nav-inner {
+max-width: 480px;
+margin: 0 auto;
+display: flex;
+}
+.nav-tab {
+flex: 1;
+padding: 12px 8px;
+text-align: center;
+font-size: 10px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–text-muted);
+cursor: pointer;
+border-bottom: 2px solid transparent;
+transition: all 0.2s;
+font-family: ‘DM Mono’, monospace;
+background: none;
+border-top: none;
+border-left: none;
+border-right: none;
+}
+.nav-tab.active {
+color: var(–accent);
+border-bottom-color: var(–accent);
+}
+.nav-tab:hover:not(.active) {
+color: var(–text-dim);
+}
+
+/* MAIN */
+main {
+max-width: 480px;
+margin: 0 auto;
+padding: 0 16px 80px;
+}
+
+/* SECTION */
+.section {
+display: none;
+padding-top: 24px;
+}
+.section.active { display: block; }
+
+/* SILHOUETTE SELECTOR */
+.silhouette-bar {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 6px;
+margin-bottom: 24px;
+}
+.sil-btn {
+padding: 10px 4px;
+text-align: center;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 15px;
+letter-spacing: 2px;
+color: var(–text-muted);
+background: var(–surface);
+border: 1px solid var(–border);
+cursor: pointer;
+transition: all 0.2s;
+}
+.sil-btn.active {
+color: var(–accent);
+border-color: var(–accent);
+background: #1a1611;
+}
+.sil-btn:hover:not(.active) {
+border-color: var(–border-light);
+color: var(–text-dim);
+}
+
+/* CATEGORY TOGGLE */
+.cat-toggle {
+display: flex;
+gap: 6px;
+margin-bottom: 20px;
+}
+.cat-btn {
+padding: 6px 14px;
+font-size: 11px;
+letter-spacing: 1px;
+color: var(–text-muted);
+background: var(–surface);
+border: 1px solid var(–border);
+cursor: pointer;
+transition: all 0.2s;
+font-family: ‘DM Mono’, monospace;
+}
+.cat-btn.active {
+color: var(–bg);
+background: var(–accent);
+border-color: var(–accent);
+}
+
+/* SIZE GRID */
+.size-label {
+font-size: 9px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+margin-bottom: 12px;
+border-left: 2px solid var(–accent);
+padding-left: 8px;
+}
+
+.size-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+margin-bottom: 24px;
+}
+
+.size-item {
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 12px 14px;
+display: flex;
+flex-direction: column;
+gap: 6px;
+transition: border-color 0.2s;
+}
+.size-item:focus-within {
+border-color: var(–accent-dim);
+}
+.size-item label {
+font-size: 9px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+}
+.size-item input {
+background: none;
+border: none;
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+font-size: 20px;
+font-weight: 300;
+width: 100%;
+outline: none;
+padding: 0;
+}
+.size-item input::placeholder {
+color: var(–text-muted);
+font-size: 16px;
+}
+.size-item .unit {
+font-size: 9px;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+}
+
+/* SAVE BTN */
+.save-btn {
+width: 100%;
+padding: 14px;
+background: var(–accent);
+color: var(–bg);
+border: none;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 18px;
+letter-spacing: 4px;
+cursor: pointer;
+transition: opacity 0.2s;
+margin-top: 8px;
+}
+.save-btn:hover { opacity: 0.85; }
+.save-btn:active { opacity: 0.7; }
+
+/* TOAST */
+.toast {
+position: fixed;
+bottom: 24px;
+left: 50%;
+transform: translateX(-50%) translateY(80px);
+background: var(–accent);
+color: var(–bg);
+padding: 10px 24px;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+letter-spacing: 2px;
+transition: transform 0.3s ease;
+z-index: 999;
+white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* CHECK SECTION */
+.check-intro {
+font-size: 11px;
+color: var(–text-dim);
+line-height: 1.8;
+margin-bottom: 20px;
+padding: 12px;
+border-left: 2px solid var(–border);
+}
+
+.check-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+margin-bottom: 16px;
+}
+.check-item {
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 12px 14px;
+}
+.check-item label {
+font-size: 9px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+display: block;
+margin-bottom: 6px;
+}
+.check-item input {
+background: none;
+border: none;
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+font-size: 20px;
+font-weight: 300;
+width: 100%;
+outline: none;
+}
+.check-item input::placeholder {
+color: var(–text-muted);
+font-size: 16px;
+}
+
+.check-btn {
+width: 100%;
+padding: 14px;
+background: var(–surface2);
+color: var(–text);
+border: 1px solid var(–border);
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 18px;
+letter-spacing: 4px;
+cursor: pointer;
+transition: all 0.2s;
+margin-bottom: 20px;
+}
+.check-btn:hover {
+border-color: var(–accent);
+color: var(–accent);
+}
+
+/* RESULT CARDS */
+.result-header {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 13px;
+letter-spacing: 3px;
+color: var(–text-muted);
+margin-bottom: 12px;
+}
+.result-grid {
+display: flex;
+flex-direction: column;
+gap: 6px;
+margin-bottom: 20px;
+}
+.result-row {
+display: flex;
+align-items: center;
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 10px 14px;
+gap: 12px;
+}
+.result-row .part-name {
+font-size: 9px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–text-dim);
+font-family: ‘DM Mono’, monospace;
+width: 80px;
+flex-shrink: 0;
+}
+.result-row .diff {
+font-family: ‘DM Mono’, monospace;
+font-size: 14px;
+flex: 1;
+}
+.diff.good { color: var(–green); }
+.diff.warn { color: var(–yellow); }
+.diff.bad { color: var(–red); }
+.diff.none { color: var(–text-muted); }
+
+.result-row .bar-wrap {
+width: 80px;
+height: 3px;
+background: var(–border);
+position: relative;
+flex-shrink: 0;
+}
+.result-row .bar-fill {
+height: 100%;
+position: absolute;
+top: 0;
+}
+
+/* SCORE */
+.score-card {
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 20px;
+text-align: center;
+margin-bottom: 20px;
+}
+.score-label {
+font-size: 9px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+margin-bottom: 8px;
+}
+.score-value {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 64px;
+line-height: 1;
+letter-spacing: 2px;
+}
+.score-value.great { color: var(–green); }
+.score-value.ok { color: var(–yellow); }
+.score-value.ng { color: var(–red); }
+.score-verdict {
+font-size: 11px;
+letter-spacing: 2px;
+color: var(–text-dim);
+margin-top: 6px;
+font-family: ‘DM Mono’, monospace;
+}
+
+/* DATA SECTION */
+.data-box {
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 16px;
+margin-bottom: 12px;
+}
+.data-box-label {
+font-size: 9px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+margin-bottom: 10px;
+}
+.data-textarea {
+width: 100%;
+background: var(–bg);
+border: 1px solid var(–border);
+color: var(–text-dim);
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+padding: 10px;
+resize: vertical;
+min-height: 100px;
+outline: none;
+line-height: 1.6;
+}
+.data-btn {
+width: 100%;
+padding: 12px;
+background: var(–surface2);
+color: var(–text-dim);
+border: 1px solid var(–border);
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+letter-spacing: 2px;
+cursor: pointer;
+transition: all 0.2s;
+margin-top: 8px;
+text-transform: uppercase;
+}
+.data-btn:hover {
+border-color: var(–accent);
+color: var(–accent);
+}
+.data-btn.danger:hover {
+border-color: var(–red);
+color: var(–red);
+}
+
+.divider {
+border: none;
+border-top: 1px solid var(–border);
+margin: 24px 0;
+}
+
+/* NO DATA */
+.no-data {
+text-align: center;
+padding: 40px 20px;
+color: var(–text-muted);
+font-size: 11px;
+letter-spacing: 1px;
+line-height: 2;
+font-family: ‘DM Mono’, monospace;
+}
+
+/* MYSIZE DISPLAY */
+.mysize-display {
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 16px;
+margin-bottom: 16px;
+}
+.mysize-display-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 14px;
+}
+.mysize-display-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 16px;
+letter-spacing: 3px;
+color: var(–accent);
+}
+.mysize-display-cat {
+font-size: 9px;
+letter-spacing: 1px;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+}
+.mysize-rows {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 6px;
+}
+.mysize-row {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+padding: 4px 0;
+border-bottom: 1px solid var(–border);
+}
+.mysize-row:nth-last-child(-n+2) { border-bottom: none; }
+.mysize-row .key {
+font-size: 9px;
+letter-spacing: 1px;
+color: var(–text-muted);
+font-family: ‘DM Mono’, monospace;
+}
+.mysize-row .val {
+font-family: ‘DM Mono’, monospace;
+font-size: 13px;
+color: var(–text);
+}
+.mysize-row .val span {
+font-size: 9px;
+color: var(–text-muted);
+}
+
+/* SCROLL */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(–bg); }
+::-webkit-scrollbar-thumb { background: var(–border); }
+
+@media (max-width: 360px) {
+.size-grid, .check-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo">MY <span>FIT</span></div>
+      <div class="subtitle">私のサイズノート</div>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" onclick="showSection('data')">DATA</button>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="showSection('mysize')">マイサイズ</button>
+    <button class="nav-tab" onclick="showSection('check')">購入前チェック</button>
+    <button class="nav-tab" onclick="showSection('view')">サイズ確認</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ① マイサイズ帳 -->
+
+  <section class="section active" id="sec-mysize">
+    <div class="silhouette-bar">
+      <button class="sil-btn active" onclick="setSilhouette('WIDE',this)">WIDE</button>
+      <button class="sil-btn" onclick="setSilhouette('REGULAR',this)">REG</button>
+      <button class="sil-btn" onclick="setSilhouette('SLIM',this)">SLIM</button>
+      <button class="sil-btn" onclick="setSilhouette('SUIT',this)">SUIT</button>
+    </div>
+
+```
+<div class="cat-toggle">
+  <button class="cat-btn active" onclick="setCategory('tops',this)">TOPS</button>
+  <button class="cat-btn" onclick="setCategory('bottoms',this)">BOTTOMS</button>
+  <button class="cat-btn" onclick="setCategory('outer',this)">OUTER</button>
+</div>
+
+<div id="size-form-tops">
+  <div class="size-label">トップス採寸</div>
+  <div class="size-grid">
+    <div class="size-item">
+      <label>着丈</label>
+      <input type="number" id="t-kitage" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>肩幅</label>
+      <input type="number" id="t-katahaba" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>身幅</label>
+      <input type="number" id="t-mihaba" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>袖丈</label>
+      <input type="number" id="t-sodedake" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>袖口</label>
+      <input type="number" id="t-sodeguchi" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>首回り</label>
+      <input type="number" id="t-kubimazari" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+  </div>
+</div>
+
+<div id="size-form-bottoms" style="display:none">
+  <div class="size-label">ボトムス採寸</div>
+  <div class="size-grid">
+    <div class="size-item">
+      <label>ウエスト</label>
+      <input type="number" id="b-waist" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>股上</label>
+      <input type="number" id="b-mataue" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>股下</label>
+      <input type="number" id="b-matashita" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>わたり幅</label>
+      <input type="number" id="b-watari" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>裾幅</label>
+      <input type="number" id="b-suso" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>ヒップ</label>
+      <input type="number" id="b-hip" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+  </div>
+</div>
+
+<div id="size-form-outer" style="display:none">
+  <div class="size-label">アウター採寸</div>
+  <div class="size-grid">
+    <div class="size-item">
+      <label>着丈</label>
+      <input type="number" id="o-kitage" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>肩幅</label>
+      <input type="number" id="o-katahaba" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>身幅</label>
+      <input type="number" id="o-mihaba" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>袖丈</label>
+      <input type="number" id="o-sodedake" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>袖口</label>
+      <input type="number" id="o-sodeguchi" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+    <div class="size-item">
+      <label>着丈(後)</label>
+      <input type="number" id="o-kitage-back" placeholder="—" step="0.5">
+      <span class="unit">cm</span>
+    </div>
+  </div>
+</div>
+
+<button class="save-btn" onclick="saveMySize()">SAVE MY SIZE</button>
+```
+
+  </section>
+
+  <!-- ② 購入前チェック -->
+
+  <section class="section" id="sec-check">
+    <div class="silhouette-bar">
+      <button class="sil-btn active" onclick="setCheckSilhouette('WIDE',this)">WIDE</button>
+      <button class="sil-btn" onclick="setCheckSilhouette('REGULAR',this)">REG</button>
+      <button class="sil-btn" onclick="setCheckSilhouette('SLIM',this)">SLIM</button>
+      <button class="sil-btn" onclick="setCheckSilhouette('SUIT',this)">SUIT</button>
+    </div>
+
+```
+<div class="cat-toggle">
+  <button class="cat-btn active" onclick="setCheckCategory('tops',this)">TOPS</button>
+  <button class="cat-btn" onclick="setCheckCategory('bottoms',this)">BOTTOMS</button>
+  <button class="cat-btn" onclick="setCheckCategory('outer',this)">OUTER</button>
+</div>
+
+<div class="check-intro">
+  ネットの採寸表の数値を入力してください。<br>
+  マイサイズとの差分を自動で評価します。
+</div>
+
+<div id="check-form-tops">
+  <div class="size-label">商品の採寸を入力</div>
+  <div class="check-grid">
+    <div class="check-item">
+      <label>着丈</label>
+      <input type="number" id="c-t-kitage" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>肩幅</label>
+      <input type="number" id="c-t-katahaba" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>身幅</label>
+      <input type="number" id="c-t-mihaba" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>袖丈</label>
+      <input type="number" id="c-t-sodedake" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>袖口</label>
+      <input type="number" id="c-t-sodeguchi" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>首回り</label>
+      <input type="number" id="c-t-kubimazari" placeholder="—" step="0.5">
+    </div>
+  </div>
+</div>
+
+<div id="check-form-bottoms" style="display:none">
+  <div class="size-label">商品の採寸を入力</div>
+  <div class="check-grid">
+    <div class="check-item">
+      <label>ウエスト</label>
+      <input type="number" id="c-b-waist" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>股上</label>
+      <input type="number" id="c-b-mataue" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>股下</label>
+      <input type="number" id="c-b-matashita" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>わたり幅</label>
+      <input type="number" id="c-b-watari" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>裾幅</label>
+      <input type="number" id="c-b-suso" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>ヒップ</label>
+      <input type="number" id="c-b-hip" placeholder="—" step="0.5">
+    </div>
+  </div>
+</div>
+
+<div id="check-form-outer" style="display:none">
+  <div class="size-label">商品の採寸を入力</div>
+  <div class="check-grid">
+    <div class="check-item">
+      <label>着丈</label>
+      <input type="number" id="c-o-kitage" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>肩幅</label>
+      <input type="number" id="c-o-katahaba" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>身幅</label>
+      <input type="number" id="c-o-mihaba" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>袖丈</label>
+      <input type="number" id="c-o-sodedake" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>袖口</label>
+      <input type="number" id="c-o-sodeguchi" placeholder="—" step="0.5">
+    </div>
+    <div class="check-item">
+      <label>着丈(後)</label>
+      <input type="number" id="c-o-kitage-back" placeholder="—" step="0.5">
+    </div>
+  </div>
+</div>
+
+<button class="check-btn" onclick="runCheck()">CHECK — 評価する</button>
+
+<div id="check-result" style="display:none">
+  <div id="score-card" class="score-card">
+    <div class="score-label">TOTAL SCORE</div>
+    <div class="score-value" id="score-num">—</div>
+    <div class="score-verdict" id="score-verdict">—</div>
+  </div>
+  <div class="result-header">PART BY PART</div>
+  <div class="result-grid" id="result-rows"></div>
+</div>
+```
+
+  </section>
+
+  <!-- ③ サイズ確認 -->
+
+  <section class="section" id="sec-view">
+    <div class="silhouette-bar">
+      <button class="sil-btn active" onclick="setViewSilhouette('WIDE',this)">WIDE</button>
+      <button class="sil-btn" onclick="setViewSilhouette('REGULAR',this)">REG</button>
+      <button class="sil-btn" onclick="setViewSilhouette('SLIM',this)">SLIM</button>
+      <button class="sil-btn" onclick="setViewSilhouette('SUIT',this)">SUIT</button>
+    </div>
+    <div id="view-content"></div>
+  </section>
+
+  <!-- DATA -->
+
+  <section class="section" id="sec-data">
+    <div class="data-box">
+      <div class="data-box-label">エクスポート — バックアップ</div>
+      <button class="data-btn" onclick="exportData()">テキストとしてコピー</button>
+      <p style="font-size:10px;color:var(--text-muted);margin-top:8px;line-height:1.7;font-family:'DM Mono',monospace;">
+        コピーしたテキストをメモアプリ等に貼り付けて保存してください。<br>機種変更の際の復元に使えます。
+      </p>
+    </div>
+
+```
+<div class="data-box">
+  <div class="data-box-label">インポート — データ復元</div>
+  <textarea class="data-textarea" id="import-text" placeholder="バックアップテキストをここに貼り付け..."></textarea>
+  <button class="data-btn" onclick="importData()">インポートして復元</button>
+</div>
+
+<hr class="divider">
+
+<div class="data-box">
+  <div class="data-box-label" style="color:var(--red)">DANGER ZONE</div>
+  <button class="data-btn danger" onclick="clearAllData()">全データを削除する</button>
+</div>
+```
+
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// STATE
+let currentSilhouette = 'WIDE';
+let currentCategory = 'tops';
+let checkSilhouette = 'WIDE';
+let checkCategory = 'tops';
+let viewSilhouette = 'WIDE';
+
+const STORAGE_KEY = 'myfit_v1';
+
+// FIELD MAPS
+const fieldMap = {
+  tops: ['kitage','katahaba','mihaba','sodedake','sodeguchi','kubimazari'],
+  bottoms: ['waist','mataue','matashita','watari','suso','hip'],
+  outer: ['kitage','katahaba','mihaba','sodedake','sodeguchi','kitage-back']
+};
+const labelMap = {
+  kitage:'着丈', katahaba:'肩幅', mihaba:'身幅', sodedake:'袖丈',
+  sodeguchi:'袖口', kubimazari:'首回り', waist:'ウエスト',
+  mataue:'股上', matashita:'股下', watari:'わたり幅', suso:'裾幅',
+  hip:'ヒップ', 'kitage-back':'着丈(後)'
+};
+
+// LOAD DATA
+function loadData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch(e) { return {}; }
+}
+function saveData(d) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+}
+
+// SHOW SECTION
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const map = {mysize:0, check:1, view:2};
+  if (map[id] !== undefined) tabs[map[id]].classList.add('active');
+  if (id === 'view') renderView();
+}
+
+// SILHOUETTE
+function setSilhouette(s, btn) {
+  currentSilhouette = s;
+  btn.closest('.silhouette-bar').querySelectorAll('.sil-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadFormValues();
+}
+function setCheckSilhouette(s, btn) {
+  checkSilhouette = s;
+  btn.closest('.silhouette-bar').querySelectorAll('.sil-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('check-result').style.display = 'none';
+}
+function setViewSilhouette(s, btn) {
+  viewSilhouette = s;
+  btn.closest('.silhouette-bar').querySelectorAll('.sil-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderView();
+}
+
+// CATEGORY
+function setCategory(cat, btn) {
+  currentCategory = cat;
+  btn.closest('.cat-toggle').querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['tops','bottoms','outer'].forEach(c => {
+    document.getElementById('size-form-' + c).style.display = c === cat ? '' : 'none';
+  });
+  loadFormValues();
+}
+function setCheckCategory(cat, btn) {
+  checkCategory = cat;
+  btn.closest('.cat-toggle').querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['tops','bottoms','outer'].forEach(c => {
+    document.getElementById('check-form-' + c).style.display = c === cat ? '' : 'none';
+  });
+  document.getElementById('check-result').style.display = 'none';
+}
+
+// LOAD FORM VALUES
+function loadFormValues() {
+  const data = loadData();
+  const key = currentSilhouette + '_' + currentCategory;
+  const saved = (data.mysize || {})[key] || {};
+  const prefix = currentCategory === 'tops' ? 't' : currentCategory === 'bottoms' ? 'b' : 'o';
+  fieldMap[currentCategory].forEach(f => {
+    const el = document.getElementById(prefix + '-' + f);
+    if (el) el.value = saved[f] !== undefined ? saved[f] : '';
+  });
+}
+
+// SAVE MY SIZE
+function saveMySize() {
+  const data = loadData();
+  if (!data.mysize) data.mysize = {};
+  const key = currentSilhouette + '_' + currentCategory;
+  const prefix = currentCategory === 'tops' ? 't' : currentCategory === 'bottoms' ? 'b' : 'o';
+  const obj = {};
+  fieldMap[currentCategory].forEach(f => {
+    const el = document.getElementById(prefix + '-' + f);
+    if (el && el.value !== '') obj[f] = parseFloat(el.value);
+  });
+  data.mysize[key] = obj;
+  saveData(data);
+  showToast('SAVED — ' + currentSilhouette + ' / ' + currentCategory.toUpperCase());
+}
+
+// RUN CHECK
+function runCheck() {
+  const data = loadData();
+  const myKey = checkSilhouette + '_' + checkCategory;
+  const mySize = (data.mysize || {})[myKey] || {};
+  const prefix = checkCategory === 'tops' ? 'c-t' : checkCategory === 'bottoms' ? 'c-b' : 'c-o';
+  const fields = fieldMap[checkCategory];
+
+  const rows = [];
+  let totalScore = 0;
+  let countedFields = 0;
+
+  fields.forEach(f => {
+    const el = document.getElementById(prefix + '-' + f);
+    if (!el || el.value === '') return;
+    const productVal = parseFloat(el.value);
+    const myVal = mySize[f];
+    if (myVal === undefined) return;
+
+    const diff = productVal - myVal;
+    countedFields++;
+    let score = 0;
+    let cls = '';
+
+    if (Math.abs(diff) <= 0.5) { score = 100; cls = 'good'; }
+    else if (Math.abs(diff) <= 1.5) { score = 75; cls = 'warn'; }
+    else if (Math.abs(diff) <= 3) { score = 50; cls = 'warn'; }
+    else { score = 10; cls = 'bad'; }
+
+    totalScore += score;
+    rows.push({ field: f, diff, productVal, myVal, cls, score });
+  });
+
+  if (rows.length === 0) {
+    showToast('マイサイズまたは商品採寸を入力してください');
+    return;
+  }
+
+  const avg = Math.round(totalScore / countedFields);
+  const scoreEl = document.getElementById('score-num');
+  const verdictEl = document.getElementById('score-verdict');
+  scoreEl.textContent = avg;
+  scoreEl.className = 'score-value ' + (avg >= 80 ? 'great' : avg >= 50 ? 'ok' : 'ng');
+  verdictEl.textContent = avg >= 80 ? '✓ BUY IT — サイズ感◎' : avg >= 50 ? '△ MAYBE — 要確認' : '✗ SKIP — サイズ不一致';
+
+  const rowsEl = document.getElementById('result-rows');
+  rowsEl.innerHTML = '';
+  rows.forEach(r => {
+    const sign = r.diff > 0 ? '+' : '';
+    const barWidth = Math.min(Math.abs(r.diff) / 5 * 100, 100);
+    const barColor = r.cls === 'good' ? '#2ecc71' : r.cls === 'warn' ? '#f39c12' : '#c0392b';
+    rowsEl.innerHTML += `
+      <div class="result-row">
+        <span class="part-name">${labelMap[r.field]}</span>
+        <span class="diff ${r.cls}">${sign}${r.diff.toFixed(1)} cm</span>
+        <div class="bar-wrap">
+          <div class="bar-fill" style="width:${barWidth}%;background:${barColor}"></div>
+        </div>
+      </div>`;
+  });
+
+  document.getElementById('check-result').style.display = 'block';
+  document.getElementById('check-result').scrollIntoView({ behavior: 'smooth' });
+}
+
+// RENDER VIEW
+function renderView() {
+  const data = loadData();
+  const cats = ['tops','bottoms','outer'];
+  const catLabels = { tops:'TOPS', bottoms:'BOTTOMS', outer:'OUTER' };
+  let html = '';
+  let hasAny = false;
+
+  cats.forEach(cat => {
+    const key = viewSilhouette + '_' + cat;
+    const saved = (data.mysize || {})[key];
+    if (!saved || Object.keys(saved).length === 0) return;
+    hasAny = true;
+    const prefix = cat === 'tops' ? 't' : cat === 'bottoms' ? 'b' : 'o';
+    let rowsHtml = '';
+    fieldMap[cat].forEach(f => {
+      if (saved[f] === undefined) return;
+      rowsHtml += `<div class="mysize-row"><span class="key">${labelMap[f]}</span><span class="val">${saved[f]}<span>cm</span></span></div>`;
+    });
+    html += `
+      <div class="mysize-display">
+        <div class="mysize-display-header">
+          <span class="mysize-display-title">${viewSilhouette}</span>
+          <span class="mysize-display-cat">${catLabels[cat]}</span>
+        </div>
+        <div class="mysize-rows">${rowsHtml}</div>
+      </div>`;
+  });
+
+  if (!hasAny) {
+    html = `<div class="no-data">— NO DATA —<br>マイサイズを登録してください</div>`;
+  }
+
+  document.getElementById('view-content').innerHTML = html;
+}
+
+// EXPORT
+function exportData() {
+  const data = loadData();
+  const text = JSON.stringify(data, null, 2);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('コピーしました — メモアプリに貼り付けて保存'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('コピーしました');
+  }
+}
+
+// IMPORT
+function importData() {
+  const text = document.getElementById('import-text').value.trim();
+  if (!text) { showToast('テキストを貼り付けてください'); return; }
+  try {
+    const parsed = JSON.parse(text);
+    saveData(parsed);
+    document.getElementById('import-text').value = '';
+    showToast('復元しました');
+    loadFormValues();
+  } catch(e) {
+    showToast('データが正しくありません');
+  }
+}
+
+// CLEAR
+function clearAllData() {
+  if (confirm('全データを削除します。この操作は取り消せません。')) {
+    localStorage.removeItem(STORAGE_KEY);
+    showToast('削除しました');
+    loadFormValues();
+  }
+}
+
+// TOAST
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// INIT
+loadFormValues();
+</script>
+
+</body>
+</html>
