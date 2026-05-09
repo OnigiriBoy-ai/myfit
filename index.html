@@ -6,16 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="only light">
 <style>
-  :root { color-scheme: only light; }
+  :root { color-scheme: only light !important; }
+  html { color-scheme: only light !important; }
   html, body {
     background-color: #0e0e0e !important;
     color: #e8e6e0 !important;
   }
+  button, input, textarea, select {
+    color-scheme: only light !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
   @media (prefers-color-scheme: dark) {
-    html, body {
-      background-color: #0e0e0e !important;
-      color: #e8e6e0 !important;
-    }
+    :root { color-scheme: only light !important; }
+    html, body { background-color: #0e0e0e !important; color: #e8e6e0 !important; }
+    button { background-color: inherit !important; color: inherit !important; border-color: inherit !important; }
+    input { background-color: inherit !important; color: inherit !important; }
   }
 </style>
 <title>MY FIT — 私のサイズノート</title>
@@ -38,6 +44,17 @@
   }
 
 - { box-sizing: border-box; margin: 0; padding: 0; }
+  button {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  border-radius: 0 !important;
+  font-family: inherit;
+  }
+  input {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  border-radius: 0 !important;
+  }
 
 body {
 background: var(–bg);
