@@ -609,16 +609,16 @@ color: var(–text-muted);
       <div class="subtitle">私のサイズノート</div>
     </div>
     <div class="header-right">
-      <button class="icon-btn" onclick="showSection('data')">DATA</button>
+      <div role="button" style="cursor:pointer;user-select:none;" class="icon-btn" onclick="showSection('data')">DATA</div>
     </div>
   </div>
 </header>
 
 <nav>
   <div class="nav-inner">
-    <button class="nav-tab active" onclick="showSection('mysize')">マイサイズ</button>
-    <button class="nav-tab" onclick="showSection('check')">購入前チェック</button>
-    <button class="nav-tab" onclick="showSection('view')">サイズ確認</button>
+    <div role="button" style="cursor:pointer;user-select:none;" class="nav-tab active" onclick="showSection('mysize')">マイサイズ</div>
+    <div role="button" style="cursor:pointer;user-select:none;" class="nav-tab" onclick="showSection('check')">購入前チェック</div>
+    <div role="button" style="cursor:pointer;user-select:none;" class="nav-tab" onclick="showSection('view')">サイズ確認</div>
   </div>
 </nav>
 
@@ -628,17 +628,17 @@ color: var(–text-muted);
 
   <section class="section active" id="sec-mysize">
     <div class="silhouette-bar">
-      <button class="sil-btn active" onclick="setSilhouette('WIDE',this)">WIDE</button>
-      <button class="sil-btn" onclick="setSilhouette('REGULAR',this)">REG</button>
-      <button class="sil-btn" onclick="setSilhouette('SLIM',this)">SLIM</button>
-      <button class="sil-btn" onclick="setSilhouette('SUIT',this)">SUIT</button>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn active" onclick="setSilhouette('WIDE',this)">WIDE</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setSilhouette('REGULAR',this)">REG</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setSilhouette('SLIM',this)">SLIM</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setSilhouette('SUIT',this)">SUIT</div>
     </div>
 
 ```
 <div class="cat-toggle">
-  <button class="cat-btn active" onclick="setCategory('tops',this)">TOPS</button>
-  <button class="cat-btn" onclick="setCategory('bottoms',this)">BOTTOMS</button>
-  <button class="cat-btn" onclick="setCategory('outer',this)">OUTER</button>
+  <div role="button" style="cursor:pointer;user-select:none;" class="cat-btn active" onclick="setCategory('tops',this)">TOPS</div>
+  <div role="button" style="cursor:pointer;user-select:none;" class="cat-btn" onclick="setCategory('bottoms',this)">BOTTOMS</div>
+  <div role="button" style="cursor:pointer;user-select:none;" class="cat-btn" onclick="setCategory('outer',this)">OUTER</div>
 </div>
 
 <div id="size-form-tops">
@@ -749,7 +749,7 @@ color: var(–text-muted);
   </div>
 </div>
 
-<button class="save-btn" onclick="saveMySize()">SAVE MY SIZE</button>
+<div role="button" style="cursor:pointer;user-select:none;" class="save-btn" onclick="saveMySize()">SAVE MY SIZE</div>
 ```
 
   </section>
@@ -758,17 +758,17 @@ color: var(–text-muted);
 
   <section class="section" id="sec-check">
     <div class="silhouette-bar">
-      <button class="sil-btn active" onclick="setCheckSilhouette('WIDE',this)">WIDE</button>
-      <button class="sil-btn" onclick="setCheckSilhouette('REGULAR',this)">REG</button>
-      <button class="sil-btn" onclick="setCheckSilhouette('SLIM',this)">SLIM</button>
-      <button class="sil-btn" onclick="setCheckSilhouette('SUIT',this)">SUIT</button>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn active" onclick="setCheckSilhouette('WIDE',this)">WIDE</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setCheckSilhouette('REGULAR',this)">REG</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setCheckSilhouette('SLIM',this)">SLIM</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setCheckSilhouette('SUIT',this)">SUIT</div>
     </div>
 
 ```
 <div class="cat-toggle">
-  <button class="cat-btn active" onclick="setCheckCategory('tops',this)">TOPS</button>
-  <button class="cat-btn" onclick="setCheckCategory('bottoms',this)">BOTTOMS</button>
-  <button class="cat-btn" onclick="setCheckCategory('outer',this)">OUTER</button>
+  <div role="button" style="cursor:pointer;user-select:none;" class="cat-btn active" onclick="setCheckCategory('tops',this)">TOPS</div>
+  <div role="button" style="cursor:pointer;user-select:none;" class="cat-btn" onclick="setCheckCategory('bottoms',this)">BOTTOMS</div>
+  <div role="button" style="cursor:pointer;user-select:none;" class="cat-btn" onclick="setCheckCategory('outer',this)">OUTER</div>
 </div>
 
 <div class="check-intro">
@@ -866,7 +866,7 @@ color: var(–text-muted);
   </div>
 </div>
 
-<button class="check-btn" onclick="runCheck()">CHECK — 評価する</button>
+<div role="button" style="cursor:pointer;user-select:none;" class="check-btn" onclick="runCheck()">CHECK — 評価する</div>
 
 <div id="check-result" style="display:none">
   <div id="score-card" class="score-card">
@@ -885,10 +885,10 @@ color: var(–text-muted);
 
   <section class="section" id="sec-view">
     <div class="silhouette-bar">
-      <button class="sil-btn active" onclick="setViewSilhouette('WIDE',this)">WIDE</button>
-      <button class="sil-btn" onclick="setViewSilhouette('REGULAR',this)">REG</button>
-      <button class="sil-btn" onclick="setViewSilhouette('SLIM',this)">SLIM</button>
-      <button class="sil-btn" onclick="setViewSilhouette('SUIT',this)">SUIT</button>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn active" onclick="setViewSilhouette('WIDE',this)">WIDE</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setViewSilhouette('REGULAR',this)">REG</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setViewSilhouette('SLIM',this)">SLIM</div>
+      <div role="button" style="cursor:pointer;user-select:none;" class="sil-btn" onclick="setViewSilhouette('SUIT',this)">SUIT</div>
     </div>
     <div id="view-content"></div>
   </section>
@@ -898,7 +898,7 @@ color: var(–text-muted);
   <section class="section" id="sec-data">
     <div class="data-box">
       <div class="data-box-label">エクスポート — バックアップ</div>
-      <button class="data-btn" onclick="exportData()">テキストとしてコピー</button>
+      <div role="button" style="cursor:pointer;user-select:none;" class="data-btn" onclick="exportData()">テキストとしてコピー</div>
       <p style="font-size:10px;color:var(--text-muted);margin-top:8px;line-height:1.7;font-family:'DM Mono',monospace;">
         コピーしたテキストをメモアプリ等に貼り付けて保存してください。<br>機種変更の際の復元に使えます。
       </p>
@@ -908,14 +908,14 @@ color: var(–text-muted);
 <div class="data-box">
   <div class="data-box-label">インポート — データ復元</div>
   <textarea class="data-textarea" id="import-text" placeholder="バックアップテキストをここに貼り付け..."></textarea>
-  <button class="data-btn" onclick="importData()">インポートして復元</button>
+  <div role="button" style="cursor:pointer;user-select:none;" class="data-btn" onclick="importData()">インポートして復元</div>
 </div>
 
 <hr class="divider">
 
 <div class="data-box">
   <div class="data-box-label" style="color:var(--red)">DANGER ZONE</div>
-  <button class="data-btn danger" onclick="clearAllData()">全データを削除する</button>
+  <div role="button" style="cursor:pointer;user-select:none;" class="data-btn danger" onclick="clearAllData()">全データを削除する</div>
 </div>
 ```
 
